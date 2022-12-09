@@ -4,11 +4,13 @@ import ListCountries from "./components/ListCountries";
 import CountryDetail from "./components/CountryDetail";
 import useDialog from "./hooks/useDialog";
 import { useState } from "react";
+import { CountryCovid } from "./utils/types";
 
 function App() {
   const { open, handleClickOpen, handleClose } = useDialog();
 
-  const [countryCode, setCountryCode] = useState<string>("");
+  const [countryCode, setCountryCode] =
+    useState<CountryCovid["CountryCode"]>("");
 
   const onClickCountryName = (countryCode: string) => {
     setCountryCode(countryCode);

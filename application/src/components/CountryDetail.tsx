@@ -8,6 +8,8 @@ import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import useCountryDetail from "../hooks/useCountryDetail";
 import { Typography } from "@mui/material";
+import { CountryCovid } from "../utils/types";
+import { UseDialogReturn } from "../hooks/useDialog";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -18,11 +20,8 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-interface CountryDetailProp {
-  open: boolean;
-  handleClickOpen: () => void;
-  handleClose: () => void;
-  countryCode: string;
+interface CountryDetailProp extends UseDialogReturn {
+  countryCode: CountryCovid["CountryCode"];
 }
 
 // should create pure component Dialog in fact
@@ -62,6 +61,7 @@ export default function CountryDetail({
               <img
                 src={data.flag}
                 alt="flag of country"
+                loading="lazy"
                 style={{ width: 400 }}
               ></img>
             </>
