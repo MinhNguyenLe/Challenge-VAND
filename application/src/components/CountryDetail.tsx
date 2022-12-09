@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -6,10 +7,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import useCountryDetail from "../hooks/useCountryDetail";
 import { Typography } from "@mui/material";
-import { CountryCovid } from "../utils/types";
+
+import useCountryDetail from "../hooks/useCountryDetail";
 import { UseDialogReturn } from "../hooks/useDialog";
+
+import { CountryCovid } from "../utils/types";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -35,9 +38,6 @@ export default function CountryDetail({
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Slide in alert dialog
-      </Button>
       <Dialog
         open={open}
         TransitionComponent={Transition}

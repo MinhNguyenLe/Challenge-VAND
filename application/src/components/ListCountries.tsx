@@ -1,10 +1,14 @@
+import { cloneElement, useState, useEffect } from "react";
+
 import { Button, Grid, ListItem, ListItemText } from "@mui/material";
-import { cloneElement } from "react";
+
 import useCountriesCovid from "../hooks/useCountriesCovid";
 import { UseDialogReturn } from "../hooks/useDialog";
 
+import { CountryCovid } from "../utils/types";
+
 interface ListCountriesProp {
-  onClickCountryName: (countryCode: string) => void;
+  onClickCountryName: (countryCode: CountryCovid["CountryCode"]) => void;
   handleClickOpen: UseDialogReturn["handleClickOpen"];
 }
 
@@ -12,17 +16,59 @@ const ListCountries = ({
   onClickCountryName,
   handleClickOpen,
 }: ListCountriesProp) => {
-  const { data, isLoading } = useCountriesCovid();
+  const { data, isLoading, status } = useCountriesCovid();
+
+  const [localCountries, setLocalCountries] = useState<CountryCovid[]>([]);
+
+  useEffect(() => {
+    if (status === "success") setLocalCountries(data);
+  }, [status, data]);
 
   if (isLoading) return <span>Loading data...</span>;
 
   if (!data) return null;
 
-  const filterByTotalConfirmed = () => {};
+  const filterByMostTotalConfirmed = () => {
+    let mostTotalConfirmed = 0;
 
-  const filterByHighestDeaths = () => {};
+    data.forEach((country) => {
+      if (country.TotalConfirmed > mostTotalConfirmed) {
+        mostTotalConfirmed = country.TotalConfirmed;
+      }
+    });
 
-  const filterByLeastRecovered = () => {};
+    setLocalCountries(
+      data.filter((country) => country.TotalConfirmed === mostTotalConfirmed)
+    );
+  };
+
+  const filterByHighestDeaths = () => {
+    let highestDeaths = 0;
+
+    data.forEach((country) => {
+      if (country.TotalDeaths > highestDeaths) {
+        highestDeaths = country.TotalDeaths;
+      }
+    });
+
+    setLocalCountries(
+      data.filter((country) => country.TotalDeaths === highestDeaths)
+    );
+  };
+
+  const filterByLeastRecovered = () => {
+    let leastRecovered: number = -1;
+
+    data.forEach((country) => {
+      if (leastRecovered < 0 || country.TotalRecovered < leastRecovered) {
+        leastRecovered = country.TotalRecovered;
+      }
+    });
+
+    setLocalCountries(
+      data.filter((country) => country.TotalRecovered === leastRecovered)
+    );
+  };
 
   return (
     <>
@@ -30,7 +76,7 @@ const ListCountries = ({
         <Button
           sx={{ m: 2 }}
           variant="outlined"
-          onClick={filterByTotalConfirmed}
+          onClick={filterByMostTotalConfirmed}
         >
           Most total confirmed cases
         </Button>
@@ -48,9 +94,18 @@ const ListCountries = ({
         >
           Least number of recovered cases
         </Button>
+        <Button
+          sx={{ m: 2 }}
+          variant="outlined"
+          onClick={() => {
+            setLocalCountries(data);
+          }}
+        >
+          Reset
+        </Button>
       </Grid>
       <>
-        {data.map((value) =>
+        {localCountries.map((value) =>
           cloneElement(
             <ListItem>
               <ListItemText

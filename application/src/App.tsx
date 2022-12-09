@@ -1,9 +1,13 @@
 import "./App.css";
+
 import { Grid, Typography, List } from "@mui/material";
+
 import ListCountries from "./components/ListCountries";
 import CountryDetail from "./components/CountryDetail";
+
 import useDialog from "./hooks/useDialog";
 import { useState } from "react";
+
 import { CountryCovid } from "./utils/types";
 
 function App() {
@@ -12,7 +16,7 @@ function App() {
   const [countryCode, setCountryCode] =
     useState<CountryCovid["CountryCode"]>("");
 
-  const onClickCountryName = (countryCode: string) => {
+  const onClickCountryName = (countryCode: CountryCovid["CountryCode"]) => {
     setCountryCode(countryCode);
   };
 
