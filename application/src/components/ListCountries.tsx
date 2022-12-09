@@ -1,8 +1,17 @@
 import { Button, Grid, ListItem, ListItemText } from "@mui/material";
 import { cloneElement } from "react";
 import useCountriesCovid from "../hooks/useCountriesCovid";
+import { UseDialogReturn } from "../hooks/useDialog";
 
-const ListCountries = () => {
+interface ListCountriesProp {
+  onClickCountryName: (countryCode: string) => void;
+  handleClickOpen: UseDialogReturn["handleClickOpen"];
+}
+
+const ListCountries = ({
+  onClickCountryName,
+  handleClickOpen,
+}: ListCountriesProp) => {
   const { data, isLoading } = useCountriesCovid();
 
   if (isLoading) return <span>Loading data...</span>;
@@ -44,7 +53,13 @@ const ListCountries = () => {
         {data.map((value) =>
           cloneElement(
             <ListItem>
-              <ListItemText primary={value.Country} />
+              <ListItemText
+                primary={value.Country}
+                onClick={() => {
+                  handleClickOpen();
+                  onClickCountryName(value.CountryCode);
+                }}
+              />
             </ListItem>,
             {
               key: value.ID,

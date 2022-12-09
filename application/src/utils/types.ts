@@ -6,3 +6,12 @@ export interface CountryCovid {
   TotalDeaths: number;
   TotalRecovered: number;
 }
+
+export interface CountryDetail {
+  name: string;
+  flag: string;
+  population: string;
+  capital: string;
+  region: string;
+  subregion: string;
+}

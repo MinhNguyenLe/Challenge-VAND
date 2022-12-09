@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import { CountryCovid } from "../utils/types";
 
 const getCountriesCovid = async (): Promise<{ Countries: CountryCovid[] }> => {
+  // must catch Promise's error in fact
   return fetch("https://api.covid19api.com/summary").then((data) =>
     data.json()
   );
