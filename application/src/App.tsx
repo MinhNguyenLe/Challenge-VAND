@@ -1,25 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Grid, Typography, List } from "@mui/material";
+import ListCountries from "./components/ListCountries";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Grid className="App" item xs={12} md={6}>
+      <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+        List countries affected by Covid-19
+      </Typography>
+      <Grid>
+        <List>
+          <ListCountries />
+        </List>
+      </Grid>
+    </Grid>
   );
 }
 
