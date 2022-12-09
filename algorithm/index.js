@@ -71,6 +71,19 @@ function defineValueAndRun(lengthOfListCharacters) {
   splitInto3Group(randomListCharacters, bestLengthOfEachGroup);
 }
 
+//NOTE: group can 0 item.
+
 // can define length of list characters at here.
 const lengthOfListCharacters = 10;
 defineValueAndRun(lengthOfListCharacters);
+
+// with case: [“A”, “B”, “C”, “D”, “E”, “F”, “G”, “H”] 
+function runSpecialCase() {
+  const list8Characters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  const bestLengthOfEachGroup = defineTheBestLengthOfEachGroup(8);
+
+  console.log(`Best length of each group: ${bestLengthOfEachGroup.toString()}`)
+
+  splitInto3Group(list8Characters, bestLengthOfEachGroup);
+}
+runSpecialCase();
